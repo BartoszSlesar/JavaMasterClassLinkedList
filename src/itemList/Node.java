@@ -1,32 +1,45 @@
 package itemList;
 
-public abstract class Node {
-    protected Node next = null;
-    protected Node previous = null;
-    private Object value;
+public class Node extends NodeItem {
 
-
-    public Node(Object value) {
-        this.value = value;
+    public Node(String value) {
+        super(value);
     }
 
-    public Object getValue() {
-        return value;
+
+    @Override
+    public int compareTo(NodeItem item) {
+        int result = -1;
+        if (item != null) {
+            String val = (String) super.getValue();
+            result = val.compareTo((String) item.getValue());
+        }
+
+        return result;
+
     }
 
-    public void setValue(String value) {
-        this.value = value;
+    @Override
+    public NodeItem next() {
+        return this.next;
     }
 
-    public abstract int compareTo(Node item);
+    @Override
+    public NodeItem previous() {
+        return this.previous;
+    }
 
-    public abstract Node next();
+    @Override
+    public void setNext(NodeItem next) {
+        this.next = next;
+    }
 
-    public abstract Node previous();
+    @Override
+    public void setPrevious(NodeItem setPrevious) {
+        this.previous = previous;
+    }
 
-    public abstract void setNext(Node next);
-
-    public abstract void setPrevious(Node setPrevious);
-
-
+    public boolean hasNext() {
+        return this.next() != null;
+    }
 }
