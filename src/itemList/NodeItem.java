@@ -17,6 +17,10 @@ public abstract class NodeItem {
         this.value = value;
     }
 
+    public boolean hasNext() {
+        return next != null;
+    }
+
     public abstract int compareTo(NodeItem item);
 
     public abstract NodeItem next();

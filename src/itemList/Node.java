@@ -2,6 +2,11 @@ package itemList;
 
 public class Node extends NodeItem {
 
+
+    public Node() {
+        super(null);
+    }
+
     public Node(String value) {
         super(value);
     }

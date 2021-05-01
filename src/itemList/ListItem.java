@@ -1,16 +1,17 @@
 package itemList;
 
 public interface ListItem {
-    boolean addItem(Node value);
+    boolean addItem(NodeItem value);
 
-    Node removeItem(int index, Node Item);
+    NodeItem removeItem(int index, NodeItem Item);
 
-    void firstObject();
+    NodeItem removeItem(NodeItem Item);
 
-    void lastObject();
+    NodeItem firstObject();
+
+    NodeItem lastObject();
 
     int listSize();
 
-    Node removeItem(Node Item);
 
 }
