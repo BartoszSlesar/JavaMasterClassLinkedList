@@ -17,7 +17,7 @@ public class Node extends NodeItem {
     @Override
     public int compareTo(NodeItem item) {
         int result = -1;
-        if (item != null) {
+        if (item != null && item.getValue() != null) {
             String val = (String) super.getValue();
             result = val.compareToIgnoreCase((String) item.getValue());
         }
@@ -46,7 +46,5 @@ public class Node extends NodeItem {
         this.previous = previous;
     }
 
-    public boolean hasNext() {
-        return this.next() != null;
-    }
+
 }

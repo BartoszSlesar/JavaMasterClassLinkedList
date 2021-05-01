@@ -20,6 +20,9 @@ public abstract class NodeItem {
     public boolean hasNext() {
         return next != null;
     }
+    public boolean hasPrevious() {
+        return previous != null;
+    }
 
     public abstract int compareTo(NodeItem item);
 

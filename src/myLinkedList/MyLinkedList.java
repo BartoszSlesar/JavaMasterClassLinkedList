@@ -7,14 +7,17 @@ public class MyLinkedList implements ListItem {
     private static int listSize;
     private NodeItem firstItem;
     private NodeItem lastObject;
+    private NodeItem iterable;
 
     public MyLinkedList() {
         listSize = 0;
         firstItem = null;
+        iterable = null;
     }
 
     public MyLinkedList(NodeItem firstItem) {
         this.firstItem = firstItem;
+        this.iterable = firstItem;
         listSize = 1;
     }
 
@@ -22,13 +25,14 @@ public class MyLinkedList implements ListItem {
     @Override
     public boolean addItem(NodeItem value) {
 
-        if (value == null) {
+        if (value == null || value.getValue() == null) {
             return false;
         }
         boolean result = false;
         if (firstItem == null) {
             firstItem = value;
             lastObject = value;
+            iterable = firstItem;
             listSize++;
         } else {
             result = addToList(firstItem, value);
@@ -43,6 +47,7 @@ public class MyLinkedList implements ListItem {
             if (nextItem == null) {
                 value.setPrevious(current);
                 current.setNext(value);
+                lastObject = value;
                 listSize++;
                 return true;
             }
@@ -68,7 +73,9 @@ public class MyLinkedList implements ListItem {
     }
 
     @Override
-    public NodeItem removeItem(int index, NodeItem Item) {
+    public NodeItem removeItem(int index) {
+
+
         return null;
     }
 
@@ -85,6 +92,26 @@ public class MyLinkedList implements ListItem {
     @Override
     public NodeItem lastObject() {
         return lastObject;
+    }
+
+    @Override
+    public NodeItem next() {
+        if (iterable.hasNext()) {
+            iterable = iterable.next();
+        } else {
+            return null;
+        }
+        return iterable;
+    }
+
+    @Override
+    public NodeItem previous() {
+        if (iterable.hasPrevious()) {
+            iterable = iterable.previous();
+        } else {
+            return null;
+        }
+        return iterable;
     }
 
     @Override
