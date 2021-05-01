@@ -1,7 +1,6 @@
 package myLinkedList;
 
 import itemList.ListItem;
-import itemList.Node;
 import itemList.NodeItem;
 
 public class MyLinkedList implements ListItem {
@@ -22,22 +21,24 @@ public class MyLinkedList implements ListItem {
 
     @Override
     public boolean addItem(NodeItem value) {
+
         if (value == null) {
             return false;
         }
+        boolean result = false;
         if (firstItem == null) {
             firstItem = value;
             lastObject = value;
             listSize++;
         } else {
-            addToList(firstItem, value);
+            result = addToList(firstItem, value);
         }
-        return false;
+        return result;
     }
 
     private boolean addToList(NodeItem current, NodeItem value) {
         int compare = current.compareTo(value);
-        if (compare == -1) {
+        if (compare < 0) {
             NodeItem nextItem = current.next();
             if (nextItem == null) {
                 value.setPrevious(current);
@@ -47,7 +48,7 @@ public class MyLinkedList implements ListItem {
             }
             return addToList(nextItem, value);
 
-        } else if (compare > 1) {
+        } else if (compare > 0) {
             NodeItem prev = current.previous();
             value.setNext(current);
             value.setPrevious(prev);
@@ -57,6 +58,7 @@ public class MyLinkedList implements ListItem {
             if (!current.hasNext()) {
                 lastObject = current;
             }
+            listSize++;
             return true;
         } else {
             return false;

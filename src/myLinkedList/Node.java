@@ -1,4 +1,6 @@
-package itemList;
+package myLinkedList;
+
+import itemList.NodeItem;
 
 public class Node extends NodeItem {
 
@@ -17,7 +19,7 @@ public class Node extends NodeItem {
         int result = -1;
         if (item != null) {
             String val = (String) super.getValue();
-            result = val.compareTo((String) item.getValue());
+            result = val.compareToIgnoreCase((String) item.getValue());
         }
 
         return result;
@@ -40,7 +42,7 @@ public class Node extends NodeItem {
     }
 
     @Override
-    public void setPrevious(NodeItem setPrevious) {
+    public void setPrevious(NodeItem previous) {
         this.previous = previous;
     }
 
