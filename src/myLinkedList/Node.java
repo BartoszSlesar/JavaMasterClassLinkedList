@@ -46,5 +46,4 @@ public class Node extends NodeItem {
         this.previous = previous;
     }
 
-
 }
