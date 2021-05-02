@@ -56,13 +56,16 @@ public class MyLinkedList implements ListItem {
 // if current value is grater than value
         } else if (compare > 0) {
             NodeItem prev = current.previous();
-            value.setLeftLink(prev);
-            value.setRightLink(current).setLeftLink(value);
             if (prev == null) {
                 this.firstItem = value;
-            }
-            if (!current.hasNext()) {
-                lastItem = current;
+                this.firstItem.setRightLink(current);
+                if (!current.hasNext()) {
+                    lastItem = current;
+                }
+
+            } else {
+                value.setLeftLink(prev).setRightLink(value);
+                value.setRightLink(current).setLeftLink(value);
             }
             listSize++;
             return true;
@@ -72,7 +75,8 @@ public class MyLinkedList implements ListItem {
 
 
     }
-//TODO correct remove item
+
+    //TODO correct remove item
     @Override
     public NodeItem removeItem(int index) {
         if (index > (this.listSize - 1) || index < 0) {
@@ -108,8 +112,11 @@ public class MyLinkedList implements ListItem {
         }
         while (node.hasNext()) {
             node = node.next();
-            if (node.compareTo(Item) == 0) {
+            int compare = node.compareTo(Item);
+            if (compare == 0) {
                 return remove(node);
+            } else if (compare > 1) {
+                return null;
             }
         }
         return null;
@@ -117,35 +124,27 @@ public class MyLinkedList implements ListItem {
 
     //     removes NodeItem from List
     private NodeItem remove(NodeItem node) {
-        if (node != null) {
 
-            if (!node.hasNext() && !node.hasPrevious()) {
-                firstItem = null;
-                lastItem = null;
-            } else if (!node.hasPrevious()) {
-                firstItem = node.next();
-                firstItem.setLeftLink(null);
-            } else if (!node.hasNext()) {
-                lastItem = node.previous();
-                lastItem.setRightLink(null);
-            } else {
-                node.previous().setRightLink(node.next());
-                node.next().setLeftLink(node.previous());
-            }
 
+        if (!node.hasNext() && !node.hasPrevious()) {
+            firstItem = null;
+            lastItem = null;
+        } else if (!node.hasPrevious()) {
+            firstItem = node.next();
+            firstItem.setLeftLink(null);
+        } else if (!node.hasNext()) {
+            lastItem = node.previous();
+            lastItem.setRightLink(null);
+        } else {
+            node.previous().setRightLink(node.next());
+            node.next().setLeftLink(node.previous());
         }
+
+
         listSize--;
         return node;
     }
 
-    public void showAllValues() {
-        NodeItem node = firstItem;
-        int index = 0;
-        do {
-            System.out.println(index + " : " + node.getValue());
-            index++;
-        } while (node.hasNext());
-    }
 
     @Override
     public NodeItem firstObject() {
@@ -157,8 +156,20 @@ public class MyLinkedList implements ListItem {
         return lastItem;
     }
 
+    //     Show all values in list
     @Override
     public void traverse() {
+        NodeItem node = firstItem;
+        if (node == null) {
+            System.out.println("List is empty");
+        } else {
+            int index = 0;
+            do {
+                System.out.println(index + " : " + node.getValue());
+                index++;
+                node = node.next();
+            } while (node != null);
+        }
 
     }
 
