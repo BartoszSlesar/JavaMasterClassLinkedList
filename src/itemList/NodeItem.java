@@ -1,8 +1,8 @@
 package itemList;
 
 public abstract class NodeItem {
-    protected NodeItem next = null;
-    protected NodeItem previous = null;
+    protected NodeItem rightLink = null;
+    protected NodeItem leftLink = null;
     private Object value;
 
     public NodeItem(Object value) {
@@ -18,10 +18,10 @@ public abstract class NodeItem {
     }
 
     public boolean hasNext() {
-        return next != null;
+        return rightLink != null;
     }
     public boolean hasPrevious() {
-        return previous != null;
+        return leftLink != null;
     }
 
     public abstract int compareTo(NodeItem item);
@@ -30,9 +30,9 @@ public abstract class NodeItem {
 
     public abstract NodeItem previous();
 
-    public abstract void setNext(NodeItem next);
+    public abstract NodeItem setRightLink(NodeItem rightLink);
 
-    public abstract void setPrevious(NodeItem setPrevious);
+    public abstract NodeItem setLeftLink(NodeItem setPrevious);
 
 
 }

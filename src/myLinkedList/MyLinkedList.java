@@ -7,17 +7,16 @@ public class MyLinkedList implements ListItem {
     private int listSize;
     private NodeItem firstItem;
     private NodeItem lastItem;
-    private NodeItem iterable;
+
 
     public MyLinkedList() {
         listSize = 0;
         firstItem = null;
-        iterable = null;
+
     }
 
     public MyLinkedList(NodeItem firstItem) {
         this.firstItem = firstItem;
-        this.iterable = firstItem;
         listSize = 1;
     }
 
@@ -29,10 +28,10 @@ public class MyLinkedList implements ListItem {
             return false;
         }
         boolean result = false;
+//        if there is no items in list, set first and last item as value, and increment size to one.
         if (firstItem == null) {
             firstItem = value;
             lastItem = value;
-            iterable = firstItem;
             listSize++;
         } else {
             result = addToList(firstItem, value);
@@ -40,23 +39,25 @@ public class MyLinkedList implements ListItem {
         return result;
     }
 
+    // add item alphabetically, using recursion
     private boolean addToList(NodeItem current, NodeItem value) {
         int compare = current.compareTo(value);
         if (compare < 0) {
-            NodeItem nextItem = current.next();
-            if (nextItem == null) {
-                value.setPrevious(current);
-                current.setNext(value);
+            NodeItem rightLink = current.next();
+            if (rightLink == null) {
+                //setLeftLink return current value, so it can be used to set right link to it
+                value.setLeftLink(current).setRightLink(value);
                 lastItem = value;
                 listSize++;
                 return true;
             }
-            return addToList(nextItem, value);
-
+//            if current  is less then value, run addToList recursively
+            return addToList(rightLink, value);
+// if current value is grater than value
         } else if (compare > 0) {
             NodeItem prev = current.previous();
-            value.setNext(current);
-            value.setPrevious(prev);
+            value.setLeftLink(prev);
+            value.setRightLink(current).setLeftLink(value);
             if (prev == null) {
                 this.firstItem = value;
             }
@@ -71,7 +72,7 @@ public class MyLinkedList implements ListItem {
 
 
     }
-
+//TODO correct remove item
     @Override
     public NodeItem removeItem(int index) {
         if (index > (this.listSize - 1) || index < 0) {
@@ -121,16 +122,15 @@ public class MyLinkedList implements ListItem {
             if (!node.hasNext() && !node.hasPrevious()) {
                 firstItem = null;
                 lastItem = null;
-                iterable = null;
             } else if (!node.hasPrevious()) {
                 firstItem = node.next();
-                firstItem.setPrevious(null);
+                firstItem.setLeftLink(null);
             } else if (!node.hasNext()) {
                 lastItem = node.previous();
-                lastItem.setNext(null);
+                lastItem.setRightLink(null);
             } else {
-                node.previous().setNext(node.next());
-                node.next().setPrevious(node.previous());
+                node.previous().setRightLink(node.next());
+                node.next().setLeftLink(node.previous());
             }
 
         }
@@ -158,24 +158,10 @@ public class MyLinkedList implements ListItem {
     }
 
     @Override
-    public NodeItem next() {
-        if (iterable.hasNext()) {
-            iterable = iterable.next();
-        } else {
-            return null;
-        }
-        return iterable;
+    public void traverse() {
+
     }
 
-    @Override
-    public NodeItem previous() {
-        if (iterable.hasPrevious()) {
-            iterable = iterable.previous();
-        } else {
-            return null;
-        }
-        return iterable;
-    }
 
     @Override
     public int listSize() {

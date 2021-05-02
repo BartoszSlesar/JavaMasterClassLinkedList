@@ -11,9 +11,7 @@ public interface ListItem {
 
     NodeItem lastObject();
 
-    NodeItem next();
-
-    NodeItem previous();
+    void traverse();
 
     int listSize();
 

@@ -28,22 +28,26 @@ public class Node extends NodeItem {
 
     @Override
     public NodeItem next() {
-        return this.next;
+        return this.rightLink;
     }
 
     @Override
     public NodeItem previous() {
-        return this.previous;
+        return this.leftLink;
     }
 
+    //    setting right reference to an object
     @Override
-    public void setNext(NodeItem next) {
-        this.next = next;
+    public NodeItem setRightLink(NodeItem rightLink) {
+        this.rightLink = rightLink;
+        return this.rightLink;
     }
 
+    //    setting left reference to an object
     @Override
-    public void setPrevious(NodeItem previous) {
-        this.previous = previous;
+    public NodeItem setLeftLink(NodeItem previous) {
+        this.leftLink = previous;
+        return this.leftLink;
     }
 
 }
