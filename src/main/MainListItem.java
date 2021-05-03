@@ -23,6 +23,7 @@ public class MainListItem {
             list.addItem(new Node(s));
         }
 
+        list.traverse();
 
     }
 }

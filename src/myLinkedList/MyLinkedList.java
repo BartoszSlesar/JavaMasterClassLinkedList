@@ -41,42 +41,40 @@ public class MyLinkedList implements ListItem {
 
     // add item alphabetically, using recursion
     private boolean addToList(NodeItem current, NodeItem value) {
-        int compare = current.compareTo(value);
-        if (compare < 0) {
-            NodeItem rightLink = current.next();
-            if (rightLink == null) {
-                //setLeftLink return current value, so it can be used to set right link to it
-                value.setLeftLink(current).setRightLink(value);
-                lastItem = value;
-                listSize++;
-                return true;
-            }
-//            if current  is less then value, run addToList recursively
-            return addToList(rightLink, value);
-// if current value is grater than value
-        } else if (compare > 0) {
-            NodeItem prev = current.previous();
-            if (prev == null) {
-                this.firstItem = value;
-                this.firstItem.setRightLink(current);
-                if (!current.hasNext()) {
-                    lastItem = current;
+        boolean result = false;
+        while (current != null) {
+            int compare = current.compareTo(value);
+            if (compare == 0) {
+                break;
+            } else if (compare > 0) {
+                NodeItem prev = current.previous();
+                if (prev == null) {
+                    if (!current.hasNext()) {
+                        this.lastItem = current;
+                    }
+                    this.firstItem = value;
+                    this.firstItem.setRightLink(current).setLeftLink(this.firstItem);
+                } else {
+                    prev.setRightLink(value).setLeftLink(prev);
+                    value.setRightLink(current);
                 }
-
-            } else {
-                value.setLeftLink(prev).setRightLink(value);
-                value.setRightLink(current).setLeftLink(value);
+                result = true;
+                listSize++;
+                break;
+            } else if (current.next() == null) {
+                current.setRightLink(value).setLeftLink(current);
+                result = true;
+                listSize++;
+                break;
             }
-            listSize++;
-            return true;
-        } else {
-            return false;
-        }
 
+            current = current.next();
+
+        }
+        return result;
 
     }
 
-    //TODO correct remove item
     @Override
     public NodeItem removeItem(int index) {
         if (index > (this.listSize - 1) || index < 0) {
