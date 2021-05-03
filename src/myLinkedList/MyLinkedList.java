@@ -44,10 +44,13 @@ public class MyLinkedList implements ListItem {
         boolean result = false;
         while (current != null) {
             int compare = current.compareTo(value);
+//            As MyLinkedList do not accept duplicates, loop will break if compare equals 0
             if (compare == 0) {
                 break;
             } else if (compare > 0) {
+//                if current checked node, is grater than value, add value, before current
                 NodeItem prev = current.previous();
+//                if prev is null, than mean current is the first item in list
                 if (prev == null) {
                     if (!current.hasNext()) {
                         this.lastItem = current;
@@ -62,7 +65,9 @@ public class MyLinkedList implements ListItem {
                 listSize++;
                 break;
             } else if (current.next() == null) {
+//                if current.next() is null, that mean the current, is last item in list, and value should be added to the right
                 current.setRightLink(value).setLeftLink(current);
+                this.lastItem = value;
                 result = true;
                 listSize++;
                 break;
